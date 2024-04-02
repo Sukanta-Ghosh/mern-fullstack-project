@@ -2,7 +2,7 @@
 
 localhost:3000/api/product
 
-### Post Body raw
+#### POST -> Body -> raw
 
 {
 "name": "Product 1",

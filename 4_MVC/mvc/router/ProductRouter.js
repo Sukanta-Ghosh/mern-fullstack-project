@@ -14,7 +14,7 @@ const ProductRouter = express.Router();
 ProductRouter.get(getAllProducts);
 
 //Create product
-ProductRouter.post(createProduct).get(getAllProducts);
+ProductRouter.route("/").post(createProduct).get(getAllProducts);
 
 // Get a product by it's id
 ProductRouter.route("/:id")

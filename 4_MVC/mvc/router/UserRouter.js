@@ -5,6 +5,6 @@ const { createUser, getAllUser } = require("../controller/UserController");
 const UserRouter = express.Router();
 
 // Create user
-UserRouter.post(createUser).get(getAllUser);
+UserRouter.route("/").post(createUser).get(getAllUser);
 
 module.exports = UserRouter;

@@ -1,8 +1,8 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-const ProductRouter = require("./mvc/router/ProductRouter");
-const UserRouter = require("./mvc/router/UserRouter");
+const ProductRouter = require("./router/ProductRouter");
+const UserRouter = require("./router/UserRouter");
 
 // it adds all the enviornment variables to processe.env
 dotenv.config();

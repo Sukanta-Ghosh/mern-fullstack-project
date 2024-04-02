@@ -1,8 +1,8 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-const ProductModel = require("./pocs/ProductModel");
-const UserModel = require("./pocs/UserModel");
+const ProductModel = require("./ProductModel");
+const UserModel = require("./UserModel");
 
 /* Enviornment variables */
 dotenv.config();
@@ -187,9 +187,11 @@ appRouter.use("/user", userRouter);
 
 /* Server request on Products */
 
-productRouter.get(getAllProducts);
+//Fetch Product
+productRouter.route("/").get(getAllProducts);
+
 // Create products
-productRouter.post(createProduct).get(getAllProducts);
+productRouter.route("/").post(createProduct).get(getAllProducts);
 //get a product by it's id
 productRouter
   .route("/:id")
@@ -199,7 +201,7 @@ productRouter
 
 /* Server request on Users */
 // Create user
-userRouter.post(createUser).get(getAllUser);
+userRouter.route("/").post(createUser).get(getAllUser);
 
 /* Eastablished connection with server */
 const PORT = process.env.PORT || LOCAL_PORT;

@@ -1,5 +1,9 @@
 ## server vs APIs
 
+### Note
+
+- In Node.js, Context means Attaching middleware or routes to a specific path
+
 ### server
 
 It is usually when a user visits a website ->to get some data/webpage. It makes the http request by clicking on a button or by doing some other action . A request will be send to a backend server and then the server will search the content related to the request and return the resp.
