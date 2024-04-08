@@ -1,4 +1,4 @@
-/* Note: Avoid this package and code for email sending */
+/* Note: Avoid sendgrid as Sendgrid account is not created */
 // package
 const sgMail = require("@sendgrid/mail");
 const dotenv = require("dotenv");
@@ -6,6 +6,7 @@ dotenv.config();
 // set your API key
 
 sgMail.setApiKey(process.env.SENDGRID_KEY);
+console.log("SENDGRID_KEY:", process.env.SENDGRID_KEY);
 
 // create email object
 const msg = {
