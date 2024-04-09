@@ -6,12 +6,11 @@ const mongoose = require("mongoose");
 // it adds all the enviornment variables to processe.env
 dotenv.config({ path: path.join(__dirname, "../", ".env") });
 /**********************connect with your DB***********************/
-const { DB_USER, DB_PASSWORD, LOCAL_PORT, DB_URL } = process.env;
+const { DB_USER, DB_PASSWORD, LOCAL_PORT, MONGODB_URL } = process.env;
 
 // connection with the DB
-//const dbURL = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.drcvhxp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 mongoose
-  .connect(DB_URL)
+  .connect(MONGODB_URL)
   .then(function (connection) {
     // console.log(connection);
     console.log("connected to DB");

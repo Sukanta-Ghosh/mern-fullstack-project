@@ -14,7 +14,7 @@ or
 
 ### envs:
 
-DB_URL =
+MONGODB_URL =
 LOCAL_PORT =
 DB_USER =
 DB_PASSWORD =

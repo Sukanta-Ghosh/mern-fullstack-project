@@ -15,11 +15,10 @@ const promisifiedJWTVerify = promisify(jwt.verify);
 
 /******************** Connection to our DB ********************************/
 
-const { DB_PASSWORD, DB_USER, LOCAL_PORT } = process.env;
+const { MONGODB_URL, LOCAL_PORT } = process.env;
 // connection with the DB
-const dbURL = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.drcvhxp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 mongoose
-  .connect(dbURL)
+  .connect(MONGODB_URL)
   .then(function (connection) {
     // console.log(connection);
     console.log("connected to DB");

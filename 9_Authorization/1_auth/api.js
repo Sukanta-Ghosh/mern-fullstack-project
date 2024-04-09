@@ -13,11 +13,10 @@ const promisifiedJWTSign = promisify(jwt.sign);
 const promisifiedJWTVerify = promisify(jwt.verify);
 
 /********************* Connection to our DB ********************************/
-const { DB_PASSWORD, DB_USER, LOCAL_PORT, DB_URL } = process.env;
+const { LOCAL_PORT, MONGODB_URL } = process.env;
 // connection with the DB
-//const dbURL = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.drcvhxp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 mongoose
-  .connect(DB_URL)
+  .connect(MONGODB_URL)
   .then(function (connection) {
     // console.log(connection);
     console.log("connected to DB");
@@ -342,10 +341,7 @@ app.get("/allowIfLoggedIn", protectRouteMiddleWare, getUserData);
 app.patch("/forgetPassword", forgetPasswordController);
 app.patch("/resetPassword/:id", resetPasswordController);
 
-/***
- * should only be allowed to be accessed by admin
- *
- * **/
+//should only be allowed to be accessed by admin
 app.get(
   "/allowOnlyAdmin",
   protectRouteMiddleWare,

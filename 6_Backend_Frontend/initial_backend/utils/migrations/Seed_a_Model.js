@@ -25,13 +25,11 @@ function seedData(Model, listOfEntries) {
     // it adds all the enviornment variables to processe.env
     dotenv.config({ path: path.join(__dirname, "../", "../", ".env") });
     /**********************connect with your DB***********************/
-    const { DB_USER, DB_PASSWORD, DB_URL } = process.env;
+    const { MONGODB_URL } = process.env;
 
     // ******************connection with the DB**********************
-    const dbURL =
-      "mongodb+srv://FS_module:a4SKdITiJiWJkeBH@cluster0.kyv7pig.mongodb.net/?retryWrites=true&w=majority";
     mongoose
-      .connect(dbURL)
+      .connect(MONGODB_URL)
       .then(() => {
         console.log("connected to the DB");
         // ******************insert all the  entries**********************
