@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 /***
  * userModel ->
  * schema
@@ -7,13 +8,7 @@
  *      price
  *      discount
  * ***/
-/**
- * rules that an entity should follow
- * **/
-const mongoose = require("mongoose");
-/***
- * amazon
- * **/
+//rules that an entity should follow
 const userSchemaRules = {
   name: {
     type: String,
@@ -46,6 +41,7 @@ const userSchemaRules = {
     default: "user",
   },
 };
+
 const userSchema = new mongoose.Schema(userSchemaRules);
 // hooks -> remove confirm Password before saving the user in the db
 userSchema.pre("save", function (next) {

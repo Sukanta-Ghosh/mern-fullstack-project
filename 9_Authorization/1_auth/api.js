@@ -4,16 +4,15 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 const promisify = require("util").promisify;
+const UserModel = require("./model/UserModel");
+const EmailHelper = require("./emailSender");
 
+/* :: API  */
 // including env variables
 dotenv.config();
-const { JWT_SECRET } = process.env;
-
-const promisifiedJWTSign = promisify(jwt.sign);
-const promisifiedJWTVerify = promisify(jwt.verify);
+const { LOCAL_PORT, MONGODB_URL, JWT_SECRET } = process.env;
 
 /********************* Connection to our DB ********************************/
-const { LOCAL_PORT, MONGODB_URL } = process.env;
 // connection with the DB
 mongoose
   .connect(MONGODB_URL)
@@ -24,8 +23,6 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-const UserModel = require("./model/UserModel");
-const EmailHelper = require("./emailSender");
 
 /*************************************************/
 const app = express();
@@ -35,10 +32,14 @@ app.use(express.json());
 app.use(cookieParser());
 
 /* :: Controller <> MVC */
+const promisifiedJWTSign = promisify(jwt.sign);
+const promisifiedJWTVerify = promisify(jwt.verify);
+
 const getUserData = async function (req, res) {
   try {
     const id = req.userId;
     const user = await UserModel.findById(id);
+
     res.status(200).json({
       message: "user data retrieved  successfully",
       user: user,
@@ -55,6 +56,7 @@ const getAllUsers = async function (req, res) {
     // -> if you don't pass anything -> return you the whole collection
     // -> if want to filter -> parameter -> an object
     const listOfUser = await UserModel.find();
+
     res.status(200).json({
       status: "successfull",
       message: `list of the product `,
@@ -74,12 +76,15 @@ const signupController = async function (req, res) {
     const userObject = req.body;
     // 2. create the user in the DB
     let newUser = await UserModel.create(userObject);
+
     // 3. send the response to the client
     res.status(201).json({
       message: "user created successfully",
       user: newUser,
       status: "success",
     });
+
+    // 4. Welcome email send
     await EmailHelper("welcome.html", newUser.email, {
       name: newUser.name,
     });
@@ -120,6 +125,7 @@ const loginController = async function (req, res) {
             httpOnly: true,
             maxAge: 1000 * 60 * 60 * 24,
           });
+
           res.status(200).json({
             message: "user logged in successfully",
             authToken: authToken,
@@ -172,6 +178,7 @@ const forgetPasswordController = async function (req, res) {
     if (req.body.email) {
       // get the user
       const user = await UserModel.findOne({ email: req.body.email });
+
       if (user) {
         // otp creation
         const otp = otpCreator();
@@ -364,9 +371,8 @@ app.listen(3001, function () {
   console.log(` server is listening to port ${LOCAL_PORT}`);
 });
 
-/***
+/*** JWT Token
  * 1. payload -> normal data
  * 2. secret -> secret key
  * 3. algorithm -> HS256(optional)
- *
  * **/

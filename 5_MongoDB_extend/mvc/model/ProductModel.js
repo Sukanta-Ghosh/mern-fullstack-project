@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 /***
  * ProductModel ->
  * schema
@@ -6,14 +7,9 @@
  *      description
  *      price
  *      discount
- *
- *
- *
  * ***/
-/**
- * rules that an entity should follow
- * **/
-const mongoose = require("mongoose");
+
+//rules that an entity should follow
 const productSchemaRules = {
   name: {
     type: String,
@@ -40,8 +36,10 @@ const productSchemaRules = {
     required: true,
   },
 };
+
 // checking for valid category
 const productSchema = new mongoose.Schema(productSchemaRules);
 const ProductModel = new mongoose.model("ProductModel", productSchema);
+
 // place where all the products will go while following the schems
 module.exports = ProductModel;

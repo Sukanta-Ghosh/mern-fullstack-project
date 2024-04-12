@@ -6,7 +6,7 @@ const UserRouter = require("./router/UserRouter");
 
 // it adds all the enviornment variables to processe.env
 dotenv.config();
-const { DB_USER, DB_PASSWORD, LOCAL_PORT, MONGODB_URL } = process.env;
+const { LOCAL_PORT, MONGODB_URL } = process.env;
 
 /* Connection with the DB */
 mongoose

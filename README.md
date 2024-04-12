@@ -11,13 +11,19 @@
 `node fileName.js`
 or
 `nodemon fileName.js`
+or
+``
 
 ### envs:
 
-MONGODB_URL =
+MONGODB_URL = string
 LOCAL_PORT =
-DB_USER =
-DB_PASSWORD =
 MAILGUN_API_KEY =
 MAILGUN_SMTP_USER =
 MAILGUN_SMTP_PASSWORD =
+JWT_SECRET = "this is secret"
+RAZORPAY_PUBLIC_KEY =
+RAZORPAY_PRIVATE_KEY =
+WEBHOOK_SECRET =
+DB_USER =
+DB_PASSWORD =

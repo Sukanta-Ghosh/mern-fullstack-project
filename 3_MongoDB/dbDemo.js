@@ -5,10 +5,9 @@ const ProductModel = require("./ProductModel");
 
 // it adds all the enviornment variables to processe.env
 dotenv.config();
-const { DB_USER, DB_PASSWORD, LOCAL_PORT, MONGODB_URL } = process.env;
+const { LOCAL_PORT, MONGODB_URL } = process.env;
 
 // Connection with the DB
-const dbURL = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.kyv7pig.mongodb.net/?retryWrites=true&w=majority`;
 mongoose
   .connect(MONGODB_URL)
   .then(function (connection) {

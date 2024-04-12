@@ -6,12 +6,11 @@ const UserModel = require("./UserModel");
 
 /* Enviornment variables */
 dotenv.config();
-const { DB_USER, DB_PASSWORD, LOCAL_PORT } = process.env;
+const { MONGODB_URL, LOCAL_PORT } = process.env;
 
 /* Connection with the DB */
-const dbURL = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.kyv7pig.mongodb.net/?retryWrites=true&w=majority`;
 mongoose
-  .connect(dbURL)
+  .connect(MONGODB_URL)
   .then(function (connection) {
     // console.log(connection);
     console.log("connected to DB");

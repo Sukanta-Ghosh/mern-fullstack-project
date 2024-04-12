@@ -31,7 +31,17 @@ const promisifiedJWTVerify = promisify(jwt.verify);
 /****************** handler functions ***************/
 const signupController = async function (req, res) {
   try {
-    //Note: Cover in module 8
+    // 1. get the data from the client -> req.body
+    const userObject = req.body;
+    // 2. create the user in the DB
+    let newUser = await UserModel.create(userObject);
+
+    // 3. send the response to the client
+    res.status(201).json({
+      message: "user created successfully",
+      user: newUser,
+      status: "success",
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -43,7 +53,53 @@ const signupController = async function (req, res) {
 
 const loginController = async function (req, res) {
   try {
-    /**** Note: Cover in module 8
+    let userDetails = req.body;
+    const email = userDetails.email;
+    const password = userDetails.password;
+    if (email == undefined || password == undefined) {
+      return res.status(401).json({
+        status: "failure",
+        message: "pleae enter email to login",
+      });
+    }
+
+    if (email) {
+      // it get's you the first matched entry
+      const user = await UserModel.findOne({ email: email });
+      if (user) {
+        // if user is found with that email
+        if (password == user.password) {
+          //  for that user -> create the token
+          const authToken = await promisifiedJWTSign(
+            { id: user._id },
+            JWT_SECRET
+          );
+          // put that token in the cookie
+          res.cookie("jwt", authToken, {
+            httpOnly: true,
+            maxAge: 90000000,
+          });
+
+          res.status(200).json({
+            message: "user logged in successfully",
+            authToken: authToken,
+          });
+        } else {
+          // if password does not match
+          res.status(401).json({
+            status: "failure",
+            message: "email or password is incorrect",
+          });
+        }
+      } else {
+        // if email does not match for any user
+        res.status(401).json({
+          status: "failure",
+          message: "email or password is incorrect",
+        });
+      }
+    }
+    /****
      * 1. check if email is present or not
      *  2. -> if not present -> send a response to the user(email or password is incorrect)
      *  3. -> if present -> check password
@@ -63,12 +119,23 @@ const loginController = async function (req, res) {
 
 const protectRouteMiddleWare = async function (req, res, next) {
   try {
-    /* Note: Cover in module 8
-    check for the cookie -> jwt or not
-    if not present -> send a response to the user(you need to be logged in)
-    if present -> verify the token(jwt.verify)
-    if token is not valid -> invalid token(login again)
-    if token is value  -> next() */
+    // check for the cookie -> jwt or not
+    // if not present -> send a response to the user(you need to be logged in)
+    // if present -> verify the token(jwt.verify)
+    // if token is not valid -> invalid token(login again)
+    // if token is value  -> next()
+    const token = req.cookies.jwt;
+    if (token == undefined) {
+      return res.status(401).json({
+        status: "failure",
+        message: "you need to be logged in",
+      });
+    } else {
+      const payload = await promisifiedJWTVerify(token, JWT_SECRET);
+      const id = payload.id;
+      req.userId = id;
+      next();
+    }
   } catch (err) {
     res.status(500).json({
       message: err.message,

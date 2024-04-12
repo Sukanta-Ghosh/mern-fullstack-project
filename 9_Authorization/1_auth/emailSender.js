@@ -39,6 +39,8 @@ async function EmailHelper(templateName, reciverEmail, creds) {
         pass: MAILGUN_SMTP_PASSWORD,
       },
     };
+
+    //send mail
     const transporter = nodemailer.createTransport(transportDetails);
     await transporter.sendMail(emailDetails);
     console.log("email sent");

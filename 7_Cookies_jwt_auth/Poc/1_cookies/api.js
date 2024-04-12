@@ -1,16 +1,14 @@
 const express = require("express");
 const app = express();
 const cookieParser = require("cookie-parser");
+
 /**
  * payload -> req.body (express.json)
  * cookie -> req.cookies (cookie-parser)
- *
  * **/
-// home
-// products
-// clearCookie
 app.use(cookieParser());
 
+// home
 app.get("/", function (req, res) {
   // header
   res.cookie("prevUrl", "home", {
@@ -26,6 +24,7 @@ app.get("/", function (req, res) {
 });
 
 /**** i will use the feature cookies to track my user****/
+// products
 app.get("/product", function (req, res) {
   let msgStr = "";
   if (req.cookies.prevUrl) {
@@ -38,6 +37,7 @@ app.get("/product", function (req, res) {
 });
 
 /********clear the cookie before expiry****/
+// clearCookie
 app.get("/clearCookies", function (req, res) {
   res.clearCookie("prevUrl", { path: "/" });
 

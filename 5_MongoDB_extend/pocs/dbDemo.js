@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 // it adds all the enviornment variables to processe.env
 dotenv.config({ path: path.join(__dirname, "../", ".env") });
 /**********************connect with your DB***********************/
-const { DB_USER, DB_PASSWORD, LOCAL_PORT, MONGODB_URL } = process.env;
+const { LOCAL_PORT, MONGODB_URL } = process.env;
 
 // connection with the DB
 mongoose
