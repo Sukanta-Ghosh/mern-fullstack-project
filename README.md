@@ -12,7 +12,7 @@
 or
 `nodemon fileName.js`
 or
-``
+`npm run start` if configured on package.json
 
 ### envs:
 

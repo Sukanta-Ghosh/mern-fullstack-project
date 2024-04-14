@@ -65,6 +65,8 @@ const paymentVerify = async (req, res) => {
     if (freshSignature === razorPaySign) {
       console.log("Payment is verified");
       console.log(req.body);
+
+      // later used for verify purpose
       const orderId = req.body.payload.payment.entity.order_id;
 
       res.status(200).json({ message: "OK" });

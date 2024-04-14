@@ -20,6 +20,13 @@ List of all the browser API : https://developer.mozilla.org/en-US/docs/Web/API
 
 Mailgun, Razorpay
 
+### Security
+
+- owasp cheet sheet : https://cheatsheetseries.owasp.org/
+- sql injection : https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet.html
+- https://owasp.org/www-project-top-ten/
+- https://www.zdnet.com/article/github-was-hit-with-the-largest-ddos-attack-ever-seen/
+
 ## Agenda
 
 ### Module 1: Intro Nodejs
@@ -91,3 +98,10 @@ Mailgun, Razorpay
   - how they solve it
 - Integrating Razorpay as payment gateway
 - Webhooks and payment confirmation
+
+### Module 11: Payment Verification
+
+- order verification
+- Creating data Model for purchases
+- Creating data model for reviews
+- Calculating average reviews on a product

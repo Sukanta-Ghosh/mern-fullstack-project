@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 /***
  * userModel ->
  * schema
@@ -11,51 +10,66 @@ const mongoose = require("mongoose");
 /**
  * rules that an entity should follow
  * **/
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+/***
+ * amazon
+ * **/
 const userSchemaRules = {
   name: {
     type: String,
-    required: [true, "Name is required for the user"],
+    required: true,
   },
   email: {
     type: String,
-    required: [true, "Email is required for the user"],
+    required: true,
     unique: true,
   },
   password: {
     type: String,
-    required: [true, "Password is required for the user"],
-    minlength: [8, "Password should be atleast 8 characters long"],
+    required: true,
+    minlength: 8,
   },
   confirmPassword: {
     type: String,
-    required: [true, "Confirm Password is required for the user"],
-    minlength: [8, "confirm should be atleast 8 characters long"],
+    required: true,
+    minlength: 8,
     // validate property
-    validate: [
-      function () {
-        return this.password == this.confirmPassword;
-      },
-      "Password and Confirm Password should be same",
-    ],
+    validate: function () {
+      return this.password == this.confirmPassword;
+    },
   },
   role: {
     type: "String",
     default: "user",
   },
+  otp: {
+    type: String,
+  },
+  otpExpiry: {
+    type: Date,
+  },
+  bookings: {
+    // type of array of objectIds
+    type: [mongoose.Schema.ObjectId],
+    ref: "bookingModel",
+  },
 };
 const userSchema = new mongoose.Schema(userSchemaRules);
-// hooks -> remove confirm Password before saving the user in the db
-userSchema.pre("save", function (next) {
+
+userSchema.pre("save", async function (next) {
   this.confirmPassword = undefined;
+  this.password = await bcrypt.hash(this.password, 10);
   next();
 });
+
 // not send password to frontend
 userSchema.pre("findOne", function (next) {
   // filter
-  this.select("-password");
   this.select("-__v");
   next();
 });
+
 // dynamic list of roles
 let roles = ["admin", "user", "vendor", "buyers"];
 userSchema.pre("save", function (next) {
@@ -65,21 +79,10 @@ userSchema.pre("save", function (next) {
     next("role is not defined");
   }
 });
-// to add some customization over error poropogation
-userSchema.post("save", function (err, doc, next) {
-  console.log("error is ", err);
-  if (err.code === 11000) {
-    next("Email is already taken");
-  } else {
-    // if error is not for unique index
-    next(err);
-  }
-});
 const UserModel = new mongoose.model("UserModel", userSchema);
 // place where all the users will go while following the schems
 module.exports = UserModel;
 /****
  * * not saving confirmPassword
- * * dynamic set of roled
- *
+ * * dynamic set of roles
  * **/

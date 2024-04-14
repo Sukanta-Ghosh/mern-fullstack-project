@@ -33,7 +33,7 @@
 
 2. For varify part:
 
-- Go to VS code port, forward port of the server
+- Go to VS code port, forward port of the server, make visibility public
 - Create webhook with forward port URL + route path
 - Then make the payment and test in console of backend
 

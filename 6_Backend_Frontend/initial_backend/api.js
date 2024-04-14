@@ -8,11 +8,10 @@ const cors = require("cors");
 dotenv.config({ path: path.join(__dirname, ".env") });
 
 /**********************connect with your DB***********************/
-const { DB_USER, DB_PASSWORD, LOCAL_PORT } = process.env;
+const { MONGODB_URL, LOCAL_PORT } = process.env;
 // connection with the DB
-const dbURL = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.drcvhxp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 mongoose
-  .connect(dbURL)
+  .connect(MONGODB_URL)
   .then(function (connection) {
     // console.log(connection);
     console.log("connected to DB");
