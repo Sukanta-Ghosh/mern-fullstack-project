@@ -18,7 +18,8 @@ List of all the browser API : https://developer.mozilla.org/en-US/docs/Web/API
 
 ### 3rd Party websites;
 
-Mailgun, Razorpay
+- Mailgun, Razorpay
+- [socket.io](https://socket.io/docs/v4/)
 
 ### Security
 
@@ -105,3 +106,27 @@ Mailgun, Razorpay
 - Creating data Model for purchases
 - Creating data model for reviews
 - Calculating average reviews on a product
+
+### Module 12: Security and Password
+
+### Module 13: Deployment
+
+- Why cloud
+  - How a client access a deployed application
+- Issues with deployment
+  - Static IP
+  - NAT
+- Managed Infra
+- Diff cloud Provider
+- EC2
+
+### Module 14: Websockets
+
+- http and realtime connections
+- web sockets
+  - features
+  - pros
+  - cons
+- chat app example
+
+### Module 15: Server Problems
